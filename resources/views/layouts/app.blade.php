@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Laravel</title>
     <link href="{{ mix('css/main.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     @livewireStyles
 </head>
 <body>
