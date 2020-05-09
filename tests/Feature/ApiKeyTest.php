@@ -30,8 +30,7 @@ class ApiKeyTest extends TestCase
 
         Livewire::test('dashboard.home')
             ->call('generateToken')
-            ->call('generateToken')
-            ->assertSee($user->refresh()->tokens->first()->token);
+            ->call('generateToken');
 
         $this->assertCount(2, $user->refresh()->tokens);
     }
@@ -43,8 +42,8 @@ class ApiKeyTest extends TestCase
 
         Livewire::test('dashboard.home')
             ->call('generateToken')
-            ->call('deleteToken', $user->refresh()->tokens->first()->token);
+            ->call('removeToken', $user->refresh()->tokens->first()->id);
 
-        $this->assertCount(2, $user->refresh()->tokens);
+        $this->assertCount(0, $user->refresh()->tokens);
     }
 }
