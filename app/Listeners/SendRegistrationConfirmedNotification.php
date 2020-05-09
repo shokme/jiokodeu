@@ -25,6 +25,6 @@ class SendRegistrationConfirmedNotification
      */
     public function handle($event)
     {
-        dd($event); // TODO: make email
+        // TODO: make email
     }
 }
