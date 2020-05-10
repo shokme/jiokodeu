@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dashboard;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Redis;
 use Livewire\Component;
 
 class Home extends Component
@@ -14,8 +15,7 @@ class Home extends Component
 
     public function generateToken() // TODO: finish test
     {
-        $token = Auth::user()->createToken($this->tokenName)->accessToken->token;
-        Cache::add($token, 0);
+        Auth::user()->createToken($this->tokenName)->accessToken->token;
     }
 
     public function removeToken(int $id) // TODO: finish test
@@ -23,21 +23,13 @@ class Home extends Component
         Auth::user()->tokens()->where('id', $id)->delete();
     }
 
-    public function increase() // TODO: remove
-    {
-        Auth::user()->tokens->each(function ($token) {
-            Cache::increment($token->token);
-        });
-    }
-
     public function mount()
     {
-        // TODO: store in database number of call a days
-        $this->apiCall = Auth::user()->tokens->map(function ($token) {
-            return Cache::get($token->token);
-        })->sum();
+        $this->apiCall = Auth::user()->countCalls();
+        $this->apiCall =
         $this->apiLimit = 5000;
     }
+
     public function render()
     {
         return view('livewire.dashboard.home', [

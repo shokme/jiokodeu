@@ -7,6 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\NewAccessToken;
@@ -58,6 +59,20 @@ class User extends Authenticatable
         ]);
 
         return new NewAccessToken($token, $token->id.'|'.$plainTextToken);
+    }
+    
+    public function countCall()
+    {
+        Auth::user()->tokens
+            ->map(function ($token) {
+                return json_decode(Redis::get($token->token));
+            })
+            ->flatten()
+            ->map(function ($token) {
+                if(!is_null($token)) {
+                    return $token->requestCount;
+                }
+            })->sum();
     }
 
     public function apiKeys() {
