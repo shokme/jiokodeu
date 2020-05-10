@@ -3,6 +3,10 @@
 Route::middleware('auth')->group(function () {
     Route::livewire('/dashboard', 'dashboard.home');
     Route::livewire('/apikeys', 'dashboard.apikeys');
+    Route::get('/logout', function () {
+            Auth::logout();
+            return redirect('/login');
+    });
 });
 
 Route::middleware('guest')->group(function () {
