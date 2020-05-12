@@ -3,8 +3,6 @@
 namespace App\Http\Livewire\Dashboard;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Redis;
 use Livewire\Component;
 
 class Home extends Component
@@ -25,8 +23,7 @@ class Home extends Component
 
     public function mount()
     {
-        $this->apiCall = Auth::user()->countCalls();
-        $this->apiCall =
+        $this->apiCall = Auth::user()->countCalls() ?? 0;
         $this->apiLimit = 5000;
     }
 

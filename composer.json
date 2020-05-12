@@ -11,6 +11,7 @@
         "php": "^7.4",
         "fideloper/proxy": "^4.0",
         "fruitcake/laravel-cors": "^1.0",
+        "laravel/cashier-mollie": "^1.0",
         "laravel/framework": "^7.0",
         "laravel/sanctum": "^2.3",
         "laravel/telescope": "^3.3",

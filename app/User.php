@@ -9,12 +9,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
+use Laravel\Cashier\Billable;
+use Laravel\Cashier\Order\Contracts\ProvidesInvoiceInformation;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Sanctum\NewAccessToken;
 
-class User extends Authenticatable
+class User extends Authenticatable implements ProvidesInvoiceInformation
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, Billable;
 
     /**
      * The attributes that are mass assignable.
@@ -60,8 +62,8 @@ class User extends Authenticatable
 
         return new NewAccessToken($token, $token->id.'|'.$plainTextToken);
     }
-    
-    public function countCall()
+
+    public function countCalls()
     {
         Auth::user()->tokens
             ->map(function ($token) {
@@ -82,5 +84,15 @@ class User extends Authenticatable
                 'hash' => $token->token
             ];
         })->all();
+    }
+
+    public function getInvoiceInformation()
+    {
+        return [$this->name, $this->email];
+    }
+
+    public function getExtraBillingInformation()
+    {
+        return null;
     }
 }
