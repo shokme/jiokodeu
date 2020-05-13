@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
   @livewireStyles
 </head>
-<body>
+<body class="bg-gray-50">
 @yield('content')
 <script src="{{ mix('js/app.js') }}"></script>
 @livewireScripts
