@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->integer('current_team_id')->unsigned()->nullable();
             $table->string('mollie_customer_id')->nullable();
             $table->string('mollie_mandate_id')->nullable();
             $table->decimal('tax_precentage', 6, 4)->default(0);
