@@ -32,20 +32,20 @@
             website (such as your email address). We are a “data processor” with regards to the data you upload to our service (such as an API request or a file upload). It is important to understand
             this distinction so you can be better informed of your rights and the rights of the people whose data you transmit.</p>
 
-          <h3 class="mt-8 text-center font-semibold text-2xl text-gray-500">Geocodio GDPR-Compliant Products</h3>
+          <h3 class="mt-8 text-center font-semibold text-2xl text-gray-500">Jiokodeu GDPR-Compliant Products</h3>
 
           <p class="mt-6">As a data controller when it comes to your personal account details, our service is GDPR-compliant by default, even for non-EU users. We believe this is in everyone’s best
             interest.</p>
 
           <p class="mt-6">Note this only applies to your personal account details, such as your email address, physical address, and consent to receive product updates. It does not cover data you
-            upload to Geocodio, such as data about your customers. That is covered below under "Geocodio as a data processor."</p>
+            upload to Geocodio, such as data about your customers. That is covered below under "Jiokodeu as a data processor."</p>
 
           <p class="mt-6">If you want to upload data for EU persons, GDPR requires that we have a signed Data Processing Agreement with each other. Users who need a signed Data Processing Agreement
-            must be on the Geocodio Unlimited plan at the time of signing (one-month or recurring). All users transmitting data about EU persons are required to have this plan. That is, if you’d like
+            must be on the Jiokodeu Unlimited plan at the time of signing (one-month or recurring). All users transmitting data about EU persons are required to have this plan. That is, if you’d like
             to upload a file or use our API with data about EU persons, you must have a Data Processing Agreement with us. <a class="text-indigo-400" href="#">You can sign a Data Processing Agreement
               on the dashboard</a>. <a class="text-indigo-400" href="/billings">You can cancel the plan at any time on the dashboard.</a></p>
 
-          <h3 class="mt-8 text-center font-semibold text-2xl text-gray-500">Geocodio as a data controller: Your account details</h3>
+          <h3 class="mt-8 text-center font-semibold text-2xl text-gray-500">Jiokodeu as a data controller: Your account details</h3>
 
           <p class="mt-6">
             <span class="font-bold">Your website activity</span>
@@ -94,7 +94,7 @@
           <p class="mt-6">Our user database is encrypted and regularly backed up to Amazon S3 in the US. Our website is hosted on Amazon S3 and CloudFront.</p>
           <p class="mt-6">We have no known breaches in our past.</p>
 
-          <h3 class="mt-8 text-center font-semibold text-2xl text-gray-500">Geocodio GDPR-Compliant Products</h3>
+          <h3 class="mt-8 text-center font-semibold text-2xl text-gray-500">Jiokodeu GDPR-Compliant Products</h3>
           <p class="mt-6">If you sign up for a paid plan with a credit card, your information is stored with <a class="text-indigo-400" href="https://www.mollie.com">Mollie</a>, our payments
             processing vendor. This is our default option, and you will be
             invoiced and billed directly through Stripe. Your financial information is never stored on our servers. If you have paper billing, invoices are stored with Quickbooks. If you pay an
@@ -120,16 +120,16 @@
             charged for any outstanding balance before your
             credit card is deleted. </p>
 
-          <h3 class="mt-8 text-center font-semibold text-2xl text-gray-500">Geocodio as a data processor</h3>
+          <h3 class="mt-8 text-center font-semibold text-2xl text-gray-500">Jiokodeu as a data processor</h3>
           <p class="mt-6">We take data protection seriously and safeguard the data you transmit to us.</p>
           <p class="mt-6">Our API and spreadsheet upload tool are hosted on leased servers from **hosting link** and are physically located in the EU. API requests on plans other than the Unlimited
             plan are
-            logged, and we occasionally analyze the logs as part of ongoing improvements. Geocodio Unlimited usage is not logged. You can opt-out of this by emailing us.</p>
+            logged, and we occasionally analyze the logs as part of ongoing improvements. Jiokodeu Unlimited usage is not logged. You can opt-out of this by emailing us.</p>
 
           <p class="mt-6">For the privacy of those whose data you are transmitting, we encourage you to only transmit location data through our services.</p>
 
           <p class="mt-6">
-            Under no circumstances can sensitive data for EU persons be transmitted to Geocodio. This includes the following categories under Articles 9 and 10 of GDPR:
+            Under no circumstances can sensitive data for EU persons be transmitted to Jiokodeu. This includes the following categories under Articles 9 and 10 of GDPR:
 
           <ul class="ml-6 mt-4">
             <li class="list-disc">racial or ethnic origin</li>
