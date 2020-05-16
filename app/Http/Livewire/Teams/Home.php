@@ -4,15 +4,18 @@ namespace App\Http\Livewire\Teams;
 
 use App\Team;
 use App\User;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Home extends Component
 {
     public string $teamName = '';
+    public string $ownerEmail = '';
+
+    public function switch()
+    {
+        auht()->user()->currentTeam->switchOwner($this->ownerEmail);
+    }
 
     public function store()
     {
