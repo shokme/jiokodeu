@@ -84,6 +84,15 @@ class User extends Authenticatable implements ProvidesInvoiceInformation
         })->all();
     }
 
+    public function monthlyRequests()
+    {
+        $requests = $this->payasyougo()->select('request_count')->whereBetween('due_date', [today()->firstOfMonth(), today()->endOfMonth()])->get();
+
+        return $requests->pluck('request_count')->map(function($count) {
+            return $count - Metered::FREE_CALLS;
+        })->sum();
+    }
+
     public function getInvoiceInformation()
     {
         return [$this->name, $this->email];
@@ -92,5 +101,10 @@ class User extends Authenticatable implements ProvidesInvoiceInformation
     public function getExtraBillingInformation()
     {
         return null;
+    }
+
+    public function payasyougo()
+    {
+        return $this->hasMany(PayAsYouGo::class);
     }
 }
