@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Dashboard;
 
+use App\Team;
 use App\User;
 use Livewire\Component;
 
@@ -27,8 +28,14 @@ class Apikey extends Component
 
     public function render()
     {
+        $ownerId = $this->user->currentTeam->owner_id;
+        $teamUsers = $this->user->currentTeam->users;
+        $membersTokens = $teamUsers->maps(fn($user) => $user->apiKeys());
+
         return view('livewire.dashboard.apikey', [
-            'tokens' => $this->user->apiKeys()
+            'tokens' => $this->user->apiKeys(),
+            'ownerTokens' => User::find($ownerId)->apiKeys(),
+            'membersTokens' => $membersTokens
         ]);
     }
 }
