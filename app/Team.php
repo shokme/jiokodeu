@@ -15,11 +15,24 @@ class Team extends Model
     {
         // TODO: test
         $user = User::select('id')->firstWhere('email', $email)->get();
-        if($user) {
+        if ($user) {
             $this->owner_id = $user->id;
             $this->save();
         }
 
         throw new ModelNotFoundException();
+    }
+
+    public function monthlyRequests()
+    {
+        $requests = PayAsYouGo::query()
+            ->select('user_id', 'request_count', 'due_date')
+            ->whereBetween('due_date', [today()->firstOfMonth(), today()->endOfMonth()])
+            ->where('team_id', $this->id)
+            ->get();
+
+        return $requests->groupBy('due_date')->map->pluck('request_count')->map->sum()->map(function ($count) {
+            return ($count - Metered::FREE_CALLS) <= 0 ? 0 : ($count - Metered::FREE_CALLS);
+        })->flatten()->sum();
     }
 }

@@ -84,6 +84,46 @@ class BillingTest extends TestCase
     /** @test */
     public function get_all_teams_request_usage_to_make_the_billing()
     {
+        $unitPrice = 50;
+        $requestCount = 2501;
+
+        $user = factory(User::class)->state('hasTeam')->create(['mollie_customer_id' => env('MANDATED_CUSTOMER_DIRECTDEBIT'), 'mollie_mandate_id' => env('MANDATED_CUSTOMER_DIRECTDEBIT_MANDATE_ID')]);
+        $member = factory(User::class)->create(['current_team_id' => $user->currentTeam->id]);
+        $member->teams()->attach($user->currentTeam->id);
+
+        factory(PayAsYouGo::class)->create([
+            'user_id' => $user->id,
+            'team_id' => $user->currentTeam->id,
+            'token' => 'api-key-token',
+            'request_count' => $requestCount,
+            'due_date' => today()->subDay()
+        ]);
+
+        factory(PayAsYouGo::class)->create([
+            'user_id' => $member->id,
+            'team_id' => $member->currentTeam->id,
+            'token' => 'api-key-token-member',
+            'request_count' => 1337,
+            'due_date' => today()->subDay()
+        ]);
+
+        factory(PayAsYouGo::class)->create([
+            'user_id' => $member->id,
+            'team_id' => $member->currentTeam->id,
+            'token' => 'api-key-token-member',
+            'request_count' => 3,
+            'due_date' => today()->subDays(2)
+        ]);
+        factory(Subscription::class)->create(['owner_id' => $user->id]);
+        factory(OrderItem::class)->create(['owner_id' => $user->id]);
+
+        $this->artisan('cashier:run');
+
+        $paymentId = Order::first()->mollie_payment_id;
+        $mollie = Mollie::api()->payments()->get($paymentId);
+
+        $this->assertEquals('paid', $mollie->status);
+        $this->assertEquals(money_to_decimal(Money::EUR(100)), $mollie->amount->value);
     }
 
     /** @test */

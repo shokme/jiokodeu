@@ -89,7 +89,7 @@ class User extends Authenticatable implements ProvidesInvoiceInformation
         $requests = $this->payasyougo()->select('request_count')->whereBetween('due_date', [today()->firstOfMonth(), today()->endOfMonth()])->get();
 
         return $requests->pluck('request_count')->map(function($count) {
-            return $count - Metered::FREE_CALLS;
+            return ($count - Metered::FREE_CALLS) <= 0 ? 0 : ($count - Metered::FREE_CALLS);
         })->sum();
     }
 

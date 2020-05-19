@@ -18,7 +18,6 @@ class Metered extends BaseOrderItemPreprocessor
 
             $nbOfCalls = $user->monthlyRequests();
             if($user->currentTeam) {
-                // TODO: merge current team to allow this dev.
                 $nbOfCalls = $user->currentTeam->monthlyRequests();
             }
 
