@@ -28,14 +28,15 @@ class Apikey extends Component
 
     public function render()
     {
-        $ownerId = $this->user->currentTeam->owner_id;
-        $teamUsers = $this->user->currentTeam->users;
-        $membersTokens = $teamUsers->maps(fn($user) => $user->apiKeys());
-
-        return view('livewire.dashboard.apikey', [
+        $ownerId = optional($this->user->currentTeam)->owner_id;
+        $data = [
             'tokens' => $this->user->apiKeys(),
-            'ownerTokens' => User::find($ownerId)->apiKeys(),
-            'membersTokens' => $membersTokens
-        ]);
+            'ownerTokens' => optional(User::find($ownerId))->apiKeys() ?? []
+        ];
+
+        $teamUsers = optional($this->user->currentTeam)->users;
+        $membersTokens = ['membersTokens' => optional($teamUsers)->maps(fn($user) => $user->apiKeys()) ?? []];
+
+        return view('livewire.dashboard.apikey', array_merge($data, $membersTokens));
     }
 }
