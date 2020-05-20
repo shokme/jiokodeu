@@ -14,6 +14,7 @@ class Apikey extends Component
     public function generateToken() // TODO: finish test
     {
         $this->user->createToken($this->tokenName)->accessToken->token;
+        activity()->log('Key generated');
     }
 
     public function removeToken(int $id) // TODO: finish test
