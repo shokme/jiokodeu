@@ -3,12 +3,14 @@
 use Illuminate\Support\Facades\Auth;
 
 Route::middleware('guest')->group(function () {
-    Route::get('/', fn() => view('welcome'));
-    Route::get('/contact', fn() => view('contact'));
-    Route::get('/compare', fn() => view('compare'));
-    Route::get('/privacy', fn() => view('privacy'));
-    Route::get('/security', fn() => view('secruity'));
-    Route::get('/tos', fn() => view('tos')); //TODO
+    Route::middleware('page-cache')->group(function () {
+        Route::get('/', fn() => view('welcome'));
+        Route::get('/contact', fn() => view('contact'));
+        Route::get('/compare', fn() => view('compare'));
+        Route::get('/privacy', fn() => view('privacy'));
+        Route::get('/security', fn() => view('secruity'));
+        Route::get('/tos', fn() => view('tos')); //TODO
+    });
     Route::livewire('/teams/invite', 'teams.account')->middleware('signed')->name('inviteToTeam');
     Route::livewire('/login', 'auth.login')->layout('layouts.auth')->name('login');
     Route::livewire('/register', 'auth.register')->layout('layouts.auth');
