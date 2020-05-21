@@ -14,12 +14,13 @@ class Apikey extends Component
     public function generateToken() // TODO: finish test
     {
         $this->user->createToken($this->tokenName)->accessToken->token;
-        activity()->log('Key generated');
+        activity()->log('Token generated');
     }
 
     public function removeToken(int $id) // TODO: finish test
     {
         $this->user->tokens()->where('id', $id)->delete();
+        activity()->log('Token deleted');
     }
 
     public function mount(User $user)
