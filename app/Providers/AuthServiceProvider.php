@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use Spatie\Activitylog\Models\Activity;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -28,6 +29,10 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define('team-owner', function ($user) {
             return $user->isOwnerOfTeam(auth()->user()->currentTeam);
+        });
+
+        Activity::saving(function (Activity $activity) {
+            $activity->properties = $activity->properties->put('ip', request()->ip());
         });
     }
 }

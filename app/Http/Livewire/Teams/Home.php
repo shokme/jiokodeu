@@ -15,6 +15,7 @@ class Home extends Component
     public function switch()
     {
         auht()->user()->currentTeam->switchOwner($this->ownerEmail);
+        activity()->log('Owner changed, from '.auth()->user()->email.' to '.$this->ownerEmail);
     }
 
     public function store()
@@ -38,7 +39,9 @@ class Home extends Component
     {
         Gate::authorize('team-owner');
 
-        User::find($id)->teams()->detach(auth()->user()->currentTeam->id);
+        $user = User::find($id);
+        $user->teams()->detach(auth()->user()->currentTeam->id);
+        activity()->log($user->email.' hsa been remove from the team');
     }
 
     public function render()

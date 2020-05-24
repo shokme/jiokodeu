@@ -19,7 +19,7 @@ class BalanceTest extends TestCase
     public function see_balance_at_0()
     {
         Livewire::test('dashboard.balance')
-            ->assertSee('Add bpayment method')
+            ->assertSee('Add payment method')
             ->assertSee('0');
     }
 }

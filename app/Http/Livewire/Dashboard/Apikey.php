@@ -14,11 +14,13 @@ class Apikey extends Component
     public function generateToken() // TODO: finish test
     {
         $this->user->createToken($this->tokenName)->accessToken->token;
+        activity()->log('Token generated');
     }
 
     public function removeToken(int $id) // TODO: finish test
     {
         $this->user->tokens()->where('id', $id)->delete();
+        activity()->log('Token deleted');
     }
 
     public function mount(User $user)
@@ -28,14 +30,15 @@ class Apikey extends Component
 
     public function render()
     {
-        $ownerId = $this->user->currentTeam->owner_id;
-        $teamUsers = $this->user->currentTeam->users;
-        $membersTokens = $teamUsers->maps(fn($user) => $user->apiKeys());
-
-        return view('livewire.dashboard.apikey', [
+        $ownerId = optional($this->user->currentTeam)->owner_id;
+        $data = [
             'tokens' => $this->user->apiKeys(),
-            'ownerTokens' => User::find($ownerId)->apiKeys(),
-            'membersTokens' => $membersTokens
-        ]);
+            'ownerTokens' => optional(User::find($ownerId))->apiKeys() ?? []
+        ];
+
+        $teamUsers = optional($this->user->currentTeam)->users;
+        $membersTokens = ['membersTokens' => optional($teamUsers)->maps(fn($user) => $user->apiKeys()) ?? []];
+
+        return view('livewire.dashboard.apikey', array_merge($data, $membersTokens));
     }
 }
