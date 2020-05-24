@@ -26,6 +26,7 @@ class Account extends Component
         ]);
 
         Auth::login($user);
+        activity()->log($this->name.' join the team');
         $this->redirect('/dashboard');
     }
 

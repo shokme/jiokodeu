@@ -21,6 +21,17 @@ Route::middleware('auth')->group(function () {
     Route::livewire('/dashboard', 'dashboard.home')->name('dashboard');
     Route::livewire('/teams', 'teams.home')->name('teams');
     Route::livewire('/billings', 'dashboard.billing')->name('billings');
+    Route::livewire('/dashboard/activities', 'dashboard.activity')->name('activities');
+    Route::get('/billings/checkout', function () {
+        /** @var \App\User $user */
+        $user = Auth::user();
+        $subscription = $user->newSubscription('pay as you go', 'pay-as-you-go', [])->quantity(0)->create();
+        if($subscription instanceof \Laravel\Cashier\Subscription) {
+            return redirect('/dashboard');
+        }
+
+        return $subscription;
+    });
     Route::get('/logout', function () {
             Auth::logout();
             return redirect('/login');
