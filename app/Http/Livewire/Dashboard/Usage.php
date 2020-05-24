@@ -9,12 +9,13 @@ class Usage extends Component
 {
     public int $apiCall = 0;
     public int $apiLimit = 0;
+    /** @var User */
     public $user;
 
-    public function mount(User $user)
+    public function mount()
     {
-        $this->user = $user;
-        $this->apiCall = $user->countCalls() ?? 0;
+        $this->user = auth()->user();
+        $this->apiCall = $this->user->countCalls() ?? 0;
         $this->apiLimit = 5000;
     }
 

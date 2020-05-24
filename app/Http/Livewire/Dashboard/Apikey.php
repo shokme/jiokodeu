@@ -2,21 +2,18 @@
 
 namespace App\Http\Livewire\Dashboard;
 
-use App\Team;
 use App\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Livewire\Component;
 
 class Apikey extends Component
 {
-    public function generateToken() // TODO: finish test
+    public function generateToken()
     {
         auth()->user()->createToken(auth()->user()->name)->accessToken->token;
         activity()->log('Token generated');
     }
 
-    public function removeToken(int $id) // TODO: finish test
+    public function removeToken(int $id)
     {
         auth()->user()->tokens()->where('id', $id)->delete();
         activity()->log('Token deleted');
@@ -28,7 +25,7 @@ class Apikey extends Component
         $ownerId = (int) optional($user->currentTeam)->owner_id;
         $data['tokens'] = $user->apiKeys();
         $data['ownerTokens'] = [];
-        if($ownerId !== $user->id) {
+        if($ownerId && $ownerId !== $user->id) {
             $data['ownerTokens'] = User::with('tokens')->find($ownerId)->apiKeys();
         }
         $data['membersTokens'] = optional($user->currentTeam)->apiKeys($user->id);
