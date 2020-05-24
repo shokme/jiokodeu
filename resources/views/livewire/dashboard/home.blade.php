@@ -1,5 +1,5 @@
 <div>
-  @livewire('dashboard.apikey', ['user' => $user])
+  <x-api-key/>
   @can('team-owner')
     @livewire('dashboard.balance')
     @livewire('dashboard.usage', ['user' => $user])
