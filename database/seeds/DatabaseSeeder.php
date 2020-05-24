@@ -11,8 +11,31 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // Owner
+        $team = factory(\App\Team::class)->create();
+        $user = factory(\App\User::class)->create([
+            'name' => 'John Doe',
+            'email' => 'owner@dev.com',
+            'current_team_id' => $team->id,
+            'mollie_customer_id' => 'cst_RkgacUQzMz',
+            'mollie_mandate_id' => 'mdt_GNpwGkN57u'
+        ]);
+        $user->teams()->attach($team->id);
+        $team->update(['owner_id' => $user->id]);
+
+        $members = factory(\App\User::class, 7)->create(['current_team_id' => $team->id]);
+        $team->users()->sync([$user->id, ...$members->pluck('id')]);
+
+        // Member
+        $member = factory(\App\User::class)->create([
+            'email' => 'member@dev.com',
+            'current_team_id' => $team->id
+        ]);
+        $member->teams()->attach($team->id);
+
+        // No Team
         factory(\App\User::class)->create([
-            'email' => 'me@dev.com'
+            'email' => 'solo@dev.com'
         ]);
     }
 }

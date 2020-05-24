@@ -26,6 +26,23 @@
         </div>
       @endif
       <ul>
+        @cannot('team-owner')
+          Tokens shared between all team
+          @foreach($ownerTokens as $ownerToken)
+            <li class="mt-2 bg-white shadow overflow-hidden sm:rounded-md">
+              <div class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50">
+                <div class="px-4 py-4 sm:px-6">
+                  <div class="flex items-center justify-between">
+                    <div class="text-sm leading-5 font-medium text-indigo-600">
+                      {{ $ownerToken['hash'] }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          @endforeach
+        @endcannot
+        Your tokens
         @foreach($tokens as $token)
           <li class="mt-2 bg-white shadow overflow-hidden sm:rounded-md">
             <div class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50">
@@ -40,6 +57,20 @@
                         <path class="heroicon-ui" d="M8 6V4c0-1.1.9-2 2-2h4a2 2 0 0 1 2 2v2h5a1 1 0 0 1 0 2h-1v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8H3a1 1 0 1 1 0-2h5zM6 8v12h12V8H6zm8-2V4h-4v2h4zm-4 4a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0v-6a1 1 0 0 1 1-1zm4 0a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0v-6a1 1 0 0 1 1-1z"/>
                       </svg>
                     </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        @endforeach
+        Members token
+        @foreach($membersTokens as $memberToken)
+          <li class="mt-2 bg-white shadow overflow-hidden sm:rounded-md">
+            <div class="block hover:bg-gray-50 focus:outline-none focus:bg-gray-50">
+              <div class="px-4 py-4 sm:px-6">
+                <div class="flex items-center justify-between">
+                  <div class="text-sm leading-5 font-medium text-indigo-600">
+                    {{ $memberToken['hash'] }}
                   </div>
                 </div>
               </div>

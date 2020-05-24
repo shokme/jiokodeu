@@ -2,11 +2,9 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
 use Laravel\Cashier\Billable;
@@ -16,7 +14,7 @@ use Laravel\Sanctum\NewAccessToken;
 
 class User extends Authenticatable implements ProvidesInvoiceInformation
 {
-    use HasApiTokens, Notifiable, Billable;
+    use HasApiTokens, Notifiable, Billable, HasTeams;
 
     /**
      * The attributes that are mass assignable.
@@ -24,7 +22,7 @@ class User extends Authenticatable implements ProvidesInvoiceInformation
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'current_team_id'
     ];
 
     /**
@@ -86,6 +84,15 @@ class User extends Authenticatable implements ProvidesInvoiceInformation
         })->all();
     }
 
+    public function monthlyRequests()
+    {
+        $requests = $this->payasyougo()->select('request_count')->whereBetween('due_date', [today()->firstOfMonth(), today()->endOfMonth()])->get();
+
+        return $requests->pluck('request_count')->map(function($count) {
+            return ($count - Metered::FREE_CALLS) <= 0 ? 0 : ($count - Metered::FREE_CALLS);
+        })->sum();
+    }
+
     public function getInvoiceInformation()
     {
         return [$this->name, $this->email];
@@ -94,5 +101,10 @@ class User extends Authenticatable implements ProvidesInvoiceInformation
     public function getExtraBillingInformation()
     {
         return null;
+    }
+
+    public function payasyougo()
+    {
+        return $this->hasMany(PayAsYouGo::class);
     }
 }

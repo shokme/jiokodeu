@@ -25,6 +25,7 @@ class Login extends Component
             return;
         }
 
+        activity()->log("User logged in");
         return redirect()->intended('/dashboard');
     }
 

@@ -17,7 +17,7 @@ class ApiKeyTest extends TestCase
     {
         Auth::login($user = factory(User::class)->create());
 
-        Livewire::test('dashboard.home')
+        Livewire::test('dashboard.apikey')
             ->call('generateToken');
 
         $this->assertCount(1, $user->refresh()->tokens);
@@ -28,7 +28,7 @@ class ApiKeyTest extends TestCase
     {
         Auth::login($user = factory(User::class)->create());
 
-        Livewire::test('dashboard.home')
+        Livewire::test('dashboard.apikey')
             ->call('generateToken')
             ->call('generateToken');
 
@@ -40,7 +40,7 @@ class ApiKeyTest extends TestCase
     {
         Auth::login($user = factory(User::class)->create());
 
-        Livewire::test('dashboard.home')
+        Livewire::test('dashboard.apikey')
             ->call('generateToken')
             ->call('removeToken', $user->refresh()->tokens->first()->id);
 

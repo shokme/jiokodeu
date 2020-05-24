@@ -5,6 +5,31 @@ services:
     image: redis
     ports:
       - 6379:6379
+
+  nginx:
+    image: bitnami/nginx:latest
+    depends_on:
+      - php
+    networks:
+      - app
+    ports:
+      - 8080:8080
+      - 444:443
+    volumes:
+      - ./:/app
+      - ./docker/default.conf:/opt/bitnami/nginx/conf/server_blocks/default.conf
+
+  php:
+    image: bitnami/php-fpm:7.4.6
+    networks:
+      - app
+    volumes:
+      - ./:/app
+
+networks:
+  app:
+    driver: bridge
+      - 6379:6379
   fathom:
     image: usefathom/fathom
     ports:
