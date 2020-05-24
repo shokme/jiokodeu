@@ -23,6 +23,13 @@ class Team extends Model
         throw new ModelNotFoundException();
     }
 
+    public function apiKeys($userId)
+    {
+        $members = $this->users()->with('tokens')->whereNotIn('id', [$userId])->get();
+
+        return $members->flatMap(fn($user) => $user->apiKeys())->all();
+    }
+
     public function monthlyRequests()
     {
         $requests = PayAsYouGo::query()

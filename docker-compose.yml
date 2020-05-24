@@ -26,10 +26,6 @@ services:
     volumes:
       - ./:/app
 
-networks:
-  app:
-    driver: bridge
-      - 6379:6379
   fathom:
     image: usefathom/fathom
     ports:
@@ -41,3 +37,7 @@ networks:
       - FATHOM_DATABASE_DRIVER=sqlite3
       - FATHOM_DATABASE_NAME=fathom.db
       - FATHOM_SECRET=secret
+
+networks:
+  app:
+    driver: bridge

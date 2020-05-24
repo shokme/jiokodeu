@@ -63,7 +63,7 @@ class User extends Authenticatable implements ProvidesInvoiceInformation
 
     public function countCalls()
     {
-        Auth::user()->tokens
+        return $this->tokens
             ->map(function ($token) {
                 return json_decode(Redis::get($token->token));
             })
@@ -76,7 +76,7 @@ class User extends Authenticatable implements ProvidesInvoiceInformation
     }
 
     public function apiKeys() {
-        return Auth::user()->tokens->map(function ($token) {
+        return $this->tokens->map(function ($token) {
             return [
                 'id' => $token->id,
                 'hash' => $token->token

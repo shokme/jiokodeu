@@ -1,7 +1,7 @@
 <div>
-  <x-api-key/>
+  <livewire:dashboard.apikey/>
   @can('team-owner')
-    @livewire('dashboard.balance')
-    @livewire('dashboard.usage', ['user' => $user])
+{{--    <livewire:dashboard.balance/>--}}
+{{--    <livewire:dashboard.usage/>--}}
   @endcan
 </div>
