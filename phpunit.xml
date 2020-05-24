@@ -33,5 +33,8 @@
         <server name="MAIL_DRIVER" value="array"/>
         <server name="QUEUE_CONNECTION" value="sync"/>
         <server name="SESSION_DRIVER" value="array"/>
+        <server name="MOLLIE_KEY" value="test_68fDpSjvCJQs5RgpjGKpMJksvFGrpz"/>
+        <server name="MANDATED_CUSTOMER_DIRECTDEBIT" value="cst_RkgacUQzMz"/>
+        <server name="MANDATED_CUSTOMER_DIRECTDEBIT_MANDATE_ID" value="mdt_AzdxyECU9c"/>
     </php>
 </phpunit>

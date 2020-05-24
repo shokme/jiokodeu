@@ -36,13 +36,14 @@ return [
     'plans' => [
         'pay-as-you-go' => [
             'amount' => [
-                'value' => '0.05',
+                'value' => '0.50',
                 'currency' => 'EUR',
             ],
             'interval' => '1 month',
             'description' => 'jiokodeu pay as you go',
             'order_item_preprocessors' => [
-                ProcessCoupons::class,
+//                ProcessCoupons::class,
+                \App\Metered::class,
                 PersistOrderItems::class,
             ],
         ],
