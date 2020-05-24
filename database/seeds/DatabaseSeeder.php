@@ -14,8 +14,11 @@ class DatabaseSeeder extends Seeder
         // Owner
         $team = factory(\App\Team::class)->create();
         $user = factory(\App\User::class)->create([
+            'name' => 'John Doe',
             'email' => 'owner@dev.com',
-            'current_team_id' => $team->id
+            'current_team_id' => $team->id,
+            'mollie_customer_id' => 'cst_RkgacUQzMz',
+            'mollie_mandate_id' => 'mdt_GNpwGkN57u'
         ]);
         $user->teams()->attach($team->id);
         $team->update(['owner_id' => $user->id]);
