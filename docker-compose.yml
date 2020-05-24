@@ -29,3 +29,15 @@ services:
 networks:
   app:
     driver: bridge
+      - 6379:6379
+  fathom:
+    image: usefathom/fathom
+    ports:
+      - 8888:8080
+    environment:
+      - FATHOM_SERVER_ADDR=8080
+      - FATHOM_GZIP=true
+      - FATHOM_DEBUG=true
+      - FATHOM_DATABASE_DRIVER=sqlite3
+      - FATHOM_DATABASE_NAME=fathom.db
+      - FATHOM_SECRET=secret
