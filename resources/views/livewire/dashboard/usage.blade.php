@@ -3,7 +3,7 @@
     <h3 class="text-lg leading-6 font-medium text-gray-900">Usage</h3>
     <p class="mt-1 text-sm leading-5 text-gray-500">A view of your daily usage over the month</p>
   </div>
-  @if($apiCall === 0) {{-- TODO: replace apiCall by row exist in database --}}
+  @if($apiCall === 0)
   <div class="mt-4 bg-white overflow-hidden shadow rounded-lg">
     <div class="px-4 py-5 sm:p-6 flex justify-center">
       <span class="text-gray-400 text-center">No recent usage.</span>

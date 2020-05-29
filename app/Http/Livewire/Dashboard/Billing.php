@@ -2,13 +2,8 @@
 
 namespace App\Http\Livewire\Dashboard;
 
-use App\User;
 use Illuminate\Support\Facades\Auth;
-use Laravel\Cashier\Exceptions\InvalidMandateException;
-use Laravel\Cashier\Exceptions\PlanNotFoundException;
-use Laravel\Cashier\SubscriptionBuilder\RedirectToCheckoutResponse;
 use Livewire\Component;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 
 class Billing extends Component
 {
@@ -24,6 +19,16 @@ class Billing extends Component
         }
 
         return redirect($subscription->getTargetUrl());
+    }
+
+    public function cancel()
+    {
+        /** @var \App\User $user */
+        $user = Auth::user();
+
+        if($user->subscribedToPlan('pay-as-you-go')) {
+            $user->subscribedToPlan('pay-as-you-go')->cancel();
+        }
     }
 
     public function render()

@@ -13,11 +13,11 @@ class Team extends Model
 
     public function switchOwner($email)
     {
-        // TODO: test
-        $user = User::select('id')->firstWhere('email', $email)->get();
+        $user = User::select('id')->firstWhere('email', $email);
         if ($user) {
             $this->owner_id = $user->id;
             $this->save();
+            return;
         }
 
         throw new ModelNotFoundException();

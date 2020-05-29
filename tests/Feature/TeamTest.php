@@ -114,8 +114,7 @@ class TeamTest extends TestCase
 
         Livewire::actingAs($owner)
             ->test('teams.home')
-            ->set('memberId', $member->id)
-            ->call('deleteMember');
+            ->call('deleteMember', $member->id);
 
         $member->refresh();
 
@@ -124,7 +123,7 @@ class TeamTest extends TestCase
 
     /** @test */
     public function member_is_not_able_to_remove_another_member()
-    {
+     {
         $owner = factory(User::class)->state('hasTeam')->create();
         $member = factory(User::class)->create();
         $member->teams()->attach($owner->currentTeam->id);
@@ -135,6 +134,21 @@ class TeamTest extends TestCase
             ->test('teams.home')
             ->call('deleteMember', $member->id);
 
-        $this->assertCount(0, $member->teams);
+        $this->assertCount(1, $member->teams);
+    }
+
+    /** @test */
+    public function owner_can_switch_to_another_owner()
+    {
+        $oldOwner = factory(User::class)->state('hasTeam')->create();
+        $newOwner = factory(User::class)->create(['email' => 'new@owner.com']);
+        $newOwner->teams()->attach($oldOwner->currentTeam->id);
+
+        Livewire::actingAs($oldOwner)
+            ->test('teams.home')
+            ->set('ownerEmail', 'new@owner.com')
+            ->call('switch');
+
+        $this->assertEquals($newOwner->id, $oldOwner->currentTeam->owner_id);
     }
 }

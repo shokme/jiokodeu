@@ -15,8 +15,13 @@ class Usage extends Component
     public function mount()
     {
         $this->user = auth()->user();
-        $this->apiCall = $this->user->countCalls() ?? 0;
-        $this->apiLimit = 5000;
+        if($this->user->currentTeam) {
+//            $this->apiCall = $this->user->currentTeam->countCalls() ?? 0; TODO: count number of team calls have been made
+            $this->user->currentTeam->call_limit;
+        } else {
+            $this->apiCall = $this->user->countCalls() ?? 0;
+            $this->apiLimit = $this->user->call_limit;
+        }
     }
 
     public function render()

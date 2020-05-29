@@ -17,6 +17,7 @@ class CreateTeamsTable extends Migration
             $table->id();
             $table->integer('owner_id')->unsigned();
             $table->string('name');
+            $table->integer('call_limit')->default(2500);
             $table->timestamps();
         });
     }

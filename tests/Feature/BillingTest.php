@@ -30,6 +30,16 @@ class BillingTest extends TestCase
     }
 
     /** @test */
+    public function user_can_subscribe()
+    {
+        Auth::login($user = factory(User::class)->create());
+
+        Livewire::test('dashboard.billing')
+            ->call('subscribe')
+            ->assertRedirect();
+    }
+
+    /** @test */
     public function job_process_the_billing()
     {
         $unitPrice = 50;
@@ -129,5 +139,11 @@ class BillingTest extends TestCase
     /** @test */
     public function subscription_can_be_canceled()
     {
+        $this->markTestIncomplete('Register the user for mollie then cancel his subscription');
+        Auth::login($user = factory(User::class)->create());
+
+        Livewire::test('dashboard.billing')
+            ->call('cancel')
+            ->assertRedirect();
     }
 }

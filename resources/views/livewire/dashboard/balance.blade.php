@@ -11,8 +11,12 @@
       </div>
       <div class="ml-auto mt-2 flex-shrink-0">
         <span class="inline-flex rounded-md shadow-sm">
-          <button wire:click="generateToken" type="button" class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700">
+          <a href="/billings" class="relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700">
             Add a payment method
+          </a>
+{{--          TODO SHOW ONLINE IF SUBSCRIPTION IS ACTIVE--}}
+          <button wire:click="cancel" type="button" class="ml-3 relative inline-flex items-center px-4 py-2 border border-transparent text-sm leading-5 font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:shadow-outline-indigo focus:border-indigo-700 active:bg-indigo-700">
+            Cancel your subscription
           </button>
         </span>
       </div>

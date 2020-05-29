@@ -60,7 +60,7 @@
           </div>
         </div>
       </div>
-      @can('team-owner')
+    @endcan
   </div>
   @if($members)
     <div class="mt-8 mb-4 flex items-center justify-between flex-wrap sm:flex-no-wrap">

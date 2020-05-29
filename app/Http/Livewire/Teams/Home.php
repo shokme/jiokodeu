@@ -14,7 +14,7 @@ class Home extends Component
 
     public function switch()
     {
-        auht()->user()->currentTeam->switchOwner($this->ownerEmail);
+        auth()->user()->currentTeam->switchOwner($this->ownerEmail);
         activity()->log('Owner changed, from '.auth()->user()->email.' to '.$this->ownerEmail);
     }
 

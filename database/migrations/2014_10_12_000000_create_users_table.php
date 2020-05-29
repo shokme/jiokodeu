@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->decimal('tax_precentage', 6, 4)->default(0);
             $table->dateTime('trial_ends_at')->nullable();
             $table->text('extra_billing_information')->nullable();
+            $table->integer('call_limit')->default(2500);
             $table->rememberToken();
             $table->timestamps();
         });

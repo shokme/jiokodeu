@@ -10,16 +10,10 @@ use Tests\TestCase;
 class BalanceTest extends TestCase
 {
     /** @test */
-    public function page_exists()
-    {
-        //
-    }
-
-    /** @test */
     public function see_balance_at_0()
     {
         Livewire::test('dashboard.balance')
-            ->assertSee('Add payment method')
+            ->assertSee('Add a payment method')
             ->assertSee('0');
     }
 }
