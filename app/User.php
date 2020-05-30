@@ -2,9 +2,11 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
 use Laravel\Cashier\Billable;
@@ -61,21 +63,8 @@ class User extends Authenticatable implements ProvidesInvoiceInformation
         return new NewAccessToken($token, $token->id.'|'.$plainTextToken);
     }
 
-    public function countCalls()
+    public function apiKeys()
     {
-        return $this->tokens
-            ->map(function ($token) {
-                return json_decode(Redis::get($token->token));
-            })
-            ->flatten()
-            ->map(function ($token) {
-                if(!is_null($token)) {
-                    return $token->requestCount;
-                }
-            })->sum();
-    }
-
-    public function apiKeys() {
         return $this->tokens->map(function ($token) {
             return [
                 'id' => $token->id,
@@ -84,11 +73,26 @@ class User extends Authenticatable implements ProvidesInvoiceInformation
         })->all();
     }
 
+    public function apiDailyUse(): array
+    {
+        $tokens = $this->tokens->map(function ($token) {
+            return $token->id.'|'.$token->token;
+        })->all();
+
+        $uses = PayAsYouGo::select('token', 'request_count', DB::raw('DATE(timestamp) as date'))->whereIn('token', $tokens)->get();
+
+        return $uses->groupBy('date')->map(function ($usage) {
+            return $usage->map(function ($item) {
+                return $item->request_count;
+            })->sum();
+        })->all();
+    }
+
     public function monthlyRequests()
     {
         $requests = $this->payasyougo()->select('request_count')->whereBetween('due_date', [today()->firstOfMonth(), today()->endOfMonth()])->get();
 
-        return $requests->pluck('request_count')->map(function($count) {
+        return $requests->pluck('request_count')->map(function ($count) {
             return ($count - Metered::FREE_CALLS) <= 0 ? 0 : ($count - Metered::FREE_CALLS);
         })->sum();
     }

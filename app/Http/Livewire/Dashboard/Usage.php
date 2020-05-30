@@ -7,20 +7,18 @@ use Livewire\Component;
 
 class Usage extends Component
 {
-    public int $apiCall = 0;
+    public array $apiDailyUse = [];
+    public array $apiTeamDailyUse = [];
     public int $apiLimit = 0;
-    /** @var User */
-    public $user;
 
     public function mount()
     {
-        $this->user = auth()->user();
-        if($this->user->currentTeam) {
-//            $this->apiCall = $this->user->currentTeam->countCalls() ?? 0; TODO: count number of team calls have been made
-            $this->user->currentTeam->call_limit;
-        } else {
-            $this->apiCall = $this->user->countCalls() ?? 0;
-            $this->apiLimit = $this->user->call_limit;
+        /** @var User $user */
+        $user = auth()->user();
+        $this->apiLimit = $user->daily_limit ?? 0;
+        $this->apiDailyUse = $user->apiDailyUse();
+        if(!is_null($user->currentTeam)) {
+            $this->apiTeamDailyUse = $user->currentTeam->apiDailyUse($user->id);
         }
     }
 

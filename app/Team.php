@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 
 class Team extends Model
 {
@@ -28,6 +29,24 @@ class Team extends Model
         $members = $this->users()->with('tokens')->whereNotIn('id', [$userId])->get();
 
         return $members->flatMap(fn($user) => $user->apiKeys())->all();
+    }
+
+    public function apiDailyUse($userId): array
+    {
+        $tokens = $this->users()->with('tokens')->whereNotIn('id', [$userId])->get();
+        $tokens = $tokens->flatMap(function ($user) {
+            return $user->tokens->map(function ($token) {
+                return $token->id.'|'.$token->token;
+            });
+        })->all();
+
+        $uses = PayAsYouGo::select('token', 'request_count', DB::raw('DATE(timestamp) as date'))->whereIn('token', $tokens)->get();
+
+        return $uses->groupBy('date')->map(function ($usage) {
+            return $usage->map(function ($item) {
+                return $item->request_count;
+            })->sum();
+        })->all();
     }
 
     public function monthlyRequests()
