@@ -2,12 +2,12 @@
 <ul>
   @if(count($tokens) > 0 && $type === 'owner')
     <p class="ml-4 mt-4 text-sm leading-5 text-gray-500">
-      Tokens shared between <span class="text-purple-800">{{ $this->user->currentTeam->name }}</span>
+      Tokens shared between <span class="text-purple-800">{{ $this->teamName }}</span>
     </p>
   @endif
   @if(count($tokens) > 0 && $type === 'members')
     <p class="ml-4 mt-4 text-sm leading-5 text-gray-500">
-      Members token of <span class="text-purple-800">{{ $this->user->currentTeam->name }}</span>
+      Members token of <span class="text-purple-800">{{ $this->teamName }}</span>
     </p>
   @endif
   @foreach($tokens as $token)

@@ -26,12 +26,14 @@
         </div>
       @else
         <x-api-token :type="'owned'" :tokens="$tokens"/>
-        @cannot('team-owner')
-          <x-api-token :type="'owner'" :tokens="$ownerTokens"/>
-        @endcannot
-        {{--          @if($user->currentTeam)--}}
-        {{--            <x-api-token :type="'members'" :tokens="$membersTokens"/>--}}
-        {{--          @endif--}}
+        @if($this->user->currentTeam)
+          @cannot('team-owner')
+            <x-api-token :type="'members'" :tokens="$ownerTokens"/>
+          @endcannot
+          @can('team-owner')
+            <x-api-token :type="'owner'" :tokens="$membersTokens"/>
+          @endcannot
+        @endif
       @endif
     </div>
   </div>

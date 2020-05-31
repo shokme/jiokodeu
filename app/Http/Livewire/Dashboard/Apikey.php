@@ -7,6 +7,9 @@ use Livewire\Component;
 
 class Apikey extends Component
 {
+    public string $teamName = '';
+    public $user;
+
     public function generateToken()
     {
         auth()->user()->createToken(auth()->user()->name)->accessToken->token;
@@ -21,7 +24,10 @@ class Apikey extends Component
 
     public function render()
     {
-        $user = auth()->user();
+        $this->user = $user = auth()->user();
+        if($user->currentTeam) {
+            $this->teamName = $user->currentTeam->name;
+        }
         $ownerId = (int) optional($user->currentTeam)->owner_id;
         $data['tokens'] = $user->apiKeys();
         $data['ownerTokens'] = [];
