@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('team-owner', function ($user) {
-            return $user->isOwnerOfTeam(auth()->user()->currentTeam);
+            return (int) auth()->user()->currentTeam->owner_id === auth()->user()->id;
         });
 
         Activity::saving(function (Activity $activity) {

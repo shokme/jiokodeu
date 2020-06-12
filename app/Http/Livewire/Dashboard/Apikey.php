@@ -9,6 +9,7 @@ class Apikey extends Component
 {
     public string $teamName = '';
     public $user;
+    private $tokens;
 
     public function generateToken()
     {
@@ -20,6 +21,11 @@ class Apikey extends Component
     {
         auth()->user()->tokens()->where('id', $id)->delete();
         activity()->log('Token deleted');
+    }
+
+    public function mount($tokens)
+    {
+        $this->tokens = $tokens;
     }
 
     public function render()
@@ -34,7 +40,8 @@ class Apikey extends Component
         if($ownerId && $ownerId !== $user->id) {
             $data['ownerTokens'] = User::with('tokens')->find($ownerId)->apiKeys();
         }
-        $data['membersTokens'] = optional($user->currentTeam)->apiKeys($user->id);
+
+        $data['membersTokens'] = optional($user->currentTeam)->apiKeys($this->tokens);
 
         return view('livewire.dashboard.apikey', $data);
     }

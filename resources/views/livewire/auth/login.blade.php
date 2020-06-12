@@ -13,7 +13,7 @@
             Email
           </label>
           <div class="mt-1 rounded-md shadow-sm">
-            <input wire:model="email" id="email" name="email" type="email" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"/>
+            <input wire:model.lazy="email" id="email" name="email" type="email" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5"/>
           </div>
           @error('email')<p class="mt-2 text-sm text-red-600" id="email-error">{{ $message }}</p>@enderror
         </div>
@@ -30,7 +30,7 @@
 
         <div class="mt-6 flex items-center justify-between">
           <div class="flex items-center">
-            <input wire:model.lazy="remember" id="remember" name="remember" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"/>
+            <input wire:model="remember" id="remember" name="remember" type="checkbox" class="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out"/>
             <label for="remember" class="ml-2 block text-sm leading-5 text-gray-900">
               Remember me
             </label>

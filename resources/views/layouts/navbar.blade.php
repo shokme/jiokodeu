@@ -7,19 +7,19 @@
           <img class="hidden lg:block h-8 w-auto" src="/img/logos/workflow-logo-on-white.svg" alt="Jiokodeu logo">
         </div>
         <div class="hidden sm:ml-6 sm:flex">
-          <a href="/pricing" class="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-500 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
-            Pricing
-          </a>
-          <a href="/compare" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+{{--          <a href="/pricing" class="inline-flex items-center px-1 pt-1 border-b-2 @if(request()->is('pricing')) border-indigo-500 @else border-transparent @endif text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">--}}
+{{--            Pricing--}}
+{{--          </a>--}}
+          <a href="/compare" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 @if(request()->is('compare')) border-indigo-500 @else border-transparent @endif text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
             Compare
           </a>
-          <a href="/security" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+          <a href="/security" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 @if(request()->is('security')) border-indigo-500 @else border-transparent @endif text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
             Security
           </a>
-          <a href="/privacy" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+          <a href="/privacy" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 @if(request()->is('privacy')) border-indigo-500 @else border-transparent @endif text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
             Private
           </a>
-          <a href="/contact" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+          <a href="/contact" class="ml-8 inline-flex items-center px-1 pt-1 border-b-2 @if(request()->is('contact')) border-indigo-500 @else border-transparent @endif text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
             Contact
           </a>
         </div>

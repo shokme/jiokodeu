@@ -11,14 +11,14 @@ class Usage extends Component
     public array $apiTeamDailyUse = [];
     public int $apiLimit = 0;
 
-    public function mount()
+    public function mount($tokens)
     {
         /** @var User $user */
         $user = auth()->user();
         $this->apiLimit = $user->daily_limit ?? 0;
         $this->apiDailyUse = $user->apiDailyUse();
         if(!is_null($user->currentTeam)) {
-            $this->apiTeamDailyUse = $user->currentTeam->apiDailyUse($user->id);
+            $this->apiTeamDailyUse = $user->currentTeam->apiDailyUse($tokens);
         }
     }
 

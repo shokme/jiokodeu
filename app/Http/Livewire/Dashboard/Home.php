@@ -16,6 +16,7 @@ class Home extends Component
 
     public function render()
     {
-        return view('livewire.dashboard.home');
+        $tokens = auth()->user()->currentTeam->membersTokens(auth()->user()->id);
+        return view('livewire.dashboard.home', ['tokens' => $tokens]);
     }
 }

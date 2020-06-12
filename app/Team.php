@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
@@ -24,16 +25,18 @@ class Team extends Model
         throw new ModelNotFoundException();
     }
 
-    public function apiKeys($userId)
+    public function membersTokens(int $userId)
     {
-        $members = $this->users()->with('tokens')->whereNotIn('id', [$userId])->get();
-
-        return $members->flatMap(fn($user) => $user->apiKeys())->all();
+        return $this->users()->whereHas('tokens')->where('id', '!=', $userId)->get();
     }
 
-    public function apiDailyUse($userId): array
+    public function apiKeys(Collection $tokens): array
     {
-        $tokens = $this->users()->with('tokens')->whereNotIn('id', [$userId])->get();
+        return $tokens->flatMap(fn($user) => $user->apiKeys())->all();
+    }
+
+    public function apiDailyUse(Collection $tokens): array
+    {
         $tokens = $tokens->flatMap(function ($user) {
             return $user->tokens->map(function ($token) {
                 return $token->id.'|'.$token->token;

@@ -30,9 +30,7 @@
     </div>
     @can('team-owner')
       @livewire('teams.invite')
-    @endcan
-    @can('team-owner')
-      <div class="">
+      <div class="ml-10">
         <div class="mb-4 flex items-center justify-between flex-wrap sm:flex-no-wrap">
           <div class="ml-4 mt-2">
             <h3 class="text-lg leading-6 font-medium text-gray-900">
@@ -100,11 +98,11 @@
                   {{ $member->email }}
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                  {{ $member->isOwner() ? 'Owner' : 'Member' }}
+                  {{ $member->id === auth()->user()->id ? 'Owner' : 'Member' }}
                 </td>
-                @can('team-owner')
+                @if(auth()->user()->id === (int) auth()->user()->currentTeam->owner_id)
                   <td class="px-6 py-4 whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                    @if(!$member->isOwner())
+                    @if($member->id !== auth()->user()->id)
                       <button wire:click="deleteMember({{$member->id}})" class="text-red-600 hover:text-red-900">Remove</button>
                     @endif
                   </td>
