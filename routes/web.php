@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 
 Route::middleware('guest')->group(function () {
+    Route::livewire('/search', 'search')->layout('layouts.map');
     Route::middleware('page-cache')->group(function () {
         Route::get('/', fn() => view('welcome'));
         Route::get('/contact', fn() => view('contact'));
