@@ -30,8 +30,11 @@ class Team extends Model
         return $this->users()->whereHas('tokens')->where('id', '!=', $userId)->get();
     }
 
-    public function apiKeys(Collection $tokens): array
+    public function apiKeys($tokens): array
     {
+        if (is_null($tokens)) {
+            return [];
+        }
         return $tokens->flatMap(fn($user) => $user->apiKeys())->all();
     }
 
