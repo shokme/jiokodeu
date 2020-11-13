@@ -18,6 +18,8 @@ class Invite extends Component
         $user = auth()->user();
         Mail::to($this->email)->queue(new InviteToTeam($this->email, $user->currentTeam));
         activity()->log($this->email.' has been invited to the team');
+
+        $this->reset();
     }
 
     public function render()
